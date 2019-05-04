@@ -2,7 +2,7 @@
 
 branches:
   only:
-    - 3.3.1-electron4
+    - wip-3.3.1-electron4
 language: node_js
 node_js: 11.14.0
 cache:
