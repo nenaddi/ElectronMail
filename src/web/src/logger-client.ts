@@ -1,3 +1,5 @@
+// TODO rename the file to "electron-log-client"
+
 import {Arguments, Logger, Unpacked} from "src/shared/types";
 import {IpcMainApiEndpoints} from "src/shared/api/main";
 import {ONE_SECOND_MS} from "src/shared/constants";
@@ -44,3 +46,6 @@ export const LOGGER: Logger = {
     debug: log.bind(null, "debug"),
     silly: log.bind(null, "silly"),
 };
+
+// used for overriding the "electron-log" in "web" webpack config, so WARN: LOGGER needs to match "electron-log" methods signature
+export default LOGGER;

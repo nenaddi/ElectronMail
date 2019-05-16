@@ -8,6 +8,7 @@ import {AngularCompilerPlugin, PLATFORM} from "@ngtools/webpack";
 import {CompilerOptions} from "typescript";
 
 import {BuildEnvironment} from "src/shared/model/common";
+import {ElectronWindow} from "src/shared/model/electron";
 import {buildBaseConfig, environment, environmentSate, outputRelateivePath, srcRelateivePath} from "./lib";
 
 // tslint:disable:no-var-requires
@@ -91,6 +92,11 @@ const baseConfig = buildBaseConfig(
             global: false,
             process: false,
             setImmediate: false,
+        },
+        resolve: {
+            alias: {
+                "electron-log": webSrcPath("./logger-client.ts"),
+            },
         },
         module: {
             rules: [
@@ -259,6 +265,21 @@ const configPatch: Record<BuildEnvironment, Configuration> = {
                 },
             ],
         },
+        plugins: [
+            new webpack.DefinePlugin({
+                [((): keyof Pick<ElectronWindow, "__ELECTRON_EXPOSURE__"> => "__ELECTRON_EXPOSURE__")()]: {
+                    buildIpcMainClient: (...buildIpcMainClientArgs: any[]) => {
+                        // tslint:disable-next-line:no-console
+                        console.log(JSON.stringify({buildIpcMainClientArgs}, null, 2));
+
+                        return (...buildIpcMainClientResultFnArgs: any[]) => {
+                            // tslint:disable-next-line:no-console
+                            console.log(JSON.stringify({buildIpcMainClientResultFnArgs}, null, 2));
+                        };
+                    },
+                },
+            }),
+        ],
     },
 };
 

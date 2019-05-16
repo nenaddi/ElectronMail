@@ -12,12 +12,6 @@ export const channel = `${PACKAGE_NAME}:webview-api`;
 
 const {Promise, Observable} = ActionType;
 
-// export type WebViewApi<T extends AccountType> = T extends "tutanota"
-//     ? typeof TUTANOTA_IPC_WEBVIEW_API
-//     : T extends "protonmail"
-//         ? typeof PROTONMAIL_IPC_WEBVIEW_API
-//         : never;
-
 export function buildWebViewApiDefinition<T extends AccountType, NotificationOutput>() {
     return {
         ping: Promise<ZoneApiParameter>(),
@@ -37,6 +31,6 @@ export function buildWebViewApiDefinition<T extends AccountType, NotificationOut
 
 export type CommonWebViewApi<T extends AccountType> = T extends "protonmail"
     ? ProtonmailApi
-    : T extends "protonmail"
+    : T extends "tutanota"
         ? TutanotaApi
         : never;

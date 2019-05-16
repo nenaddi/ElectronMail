@@ -17,6 +17,7 @@ import {ElectronContextLocations} from "src/shared/model/electron";
 import {MemoryDbAccount} from "src/shared/model/database";
 import {Omit} from "src/shared/types";
 import {PACKAGE_NAME} from "src/shared/constants";
+import {buildLoggerBundle} from "src/electron-preload/util";
 
 export type IpcMainServiceScan = ScanService<typeof IPC_MAIN_API>;
 
@@ -142,6 +143,7 @@ export interface InitResponse {
 export const IPC_MAIN_API = createIpcMainApiService({
     channel: `${PACKAGE_NAME}:ipcMain-api`,
     apiDefinition: ENDPOINTS_DEFINITION,
+    logger: buildLoggerBundle("[IPC_MAIN_API]"),
 });
 
 export const IPC_MAIN_API_DB_INDEXER_ON_ACTIONS = unionize({
